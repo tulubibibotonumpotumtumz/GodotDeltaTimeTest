@@ -1,8 +1,6 @@
 # GodotDeltaTimeTest
 > The goal of this project is to demonstrate how delta time is used in Godot 4. The theory is applicable to all game engines that allows the use of delta time.
 
-_⚠️Disclaimer: these techniques aren't necessarily mathematically exact or rigourous because digital computers cannot produce infinitely small values. This is "good enough" for what we're trying to achieve and in comparison to not using it._
-
 ## All displacements currently implemented
 1. Linear
 2. Quadratic
