@@ -1,43 +1,50 @@
 # GodotDeltaTimeTest
-> The goal of this project is to demonstrate how delta time is used in Godot 4. The theory is applicable to all game engines that allows the use of delta time.
+> The goal of this project is to demonstrate how delta time is used in Godot 4. The theory is applicable to all game engines that allow the use of delta time to their users (it would be a very bad one if it didn't).
 
 ## All displacements currently implemented
 1. Linear
 2. Quadratic
+---
+I like to start from the speed function when position doesn't matter and then do the integral to figure out how much I moved to add it to my position (x or y) variable.
+I can also go the other way and decide how much I want to move in one second if that's important and then find the speed with the derivative if necessary.
+  
+Aside from helping with varying frame rates, Δt also helps with imitating a continuous function and get more accurate values.  
+In fact, all the formulas/notations (integrals, derivatives) with _dt_ in them are here replaced with Δt, a more discrete value (we obviously can't get infinitely small with digital computers) that gets more and more accurate results as the frame rate increases but does a "good enough" job if it's low as well. It's all about using Riemann sums without going into crazy concepts like infinity which is way more intuitive and easy to play with.
+  
+I'm no math major but that's probably enough to get by with using delta time in most circumstances.
 
-<!---
+---
 ### Linear Movement
-### Quadratic Movement
-
-## What is delta time ?
-Delta time or Δt represents a difference between two values t<sub>0</sub> and t<sub>1</sub> (w/ t<sub>0</sub> < t<sub>1</sub>) on the time axis.  
-We could say that _Δt = t<sub>1</sub> - t<sub>0</sub>_
-
-Now, the first reason to use Δt is for :
-### Frame rate independence
-Let's say we want to move a 100 units in one second with a game running at 30 frames per second. It could look like this:
-``` 
-#simulates number of frames per second (fps)
-var expected_fps = 30
-var speed = 100/expected_fps
-var actual_fps = 30
-#game running
-for i in range(actual_fps):
-  position.x += speed/expected_fps
-```
-> I've made an assumption for simplicity that in one second we will always have 30 frames (hence why actual_fps = expected_fps) .
-
-The position will gain 100/30 ≈ 3.3 units every frame. Now we will end up moving approximately a 30\*3.3 ≈ 100 units in one second.  
-But what if someone with a better computer could run the game at 60 fps? What if a low end computer could only run it at 15?  
-What we expected our computer to do doesn't work anymore because they will actually be running at a different frame rate:  
-3.3\*60 ≈ 200 units, 3.3*15 ≈ 50 units.  
-This essentially is what is done when we have this in Godot:
-``` 
-var expected_fps = 30
-var speed = 100
+I decided to make the speed function _s(t) = 2_ which is implemented as such:  
+```gdscript
+#linear speed
+var lin_speed = 2
 func _process(delta):
-  position.x += speed/expected_fps
+  position.x += lin_speed*delta
 ```
-And delta represents our `actual_fps` variable from earlier.
----!>
+By doing the integral we can get _S(t) = 2t_ and when it is displayed, this is what it returns for the position:
+```
+t=0: 0.23333333432674
+t=1: 2.17475533485413
+t=2: 4.17475366592407
+t=3: 6.17475175857544
+t=4: 8.1747522354126
+```
 
+### Quadratic Movement
+The speed function is described by _s(t) = 2t + 2_ which gives:
+```gdscript
+var quad_speed = 2
+var acceleration = 2
+func _process(delta):
+	position.x += quad_speed*delta
+  quad_speed += acceleration*delta
+```
+To find how much we actually moved we find the integral _S(t) = t<sup>2</sup> + 2t_ with the values:
+```
+t=0: 0.30000001192093
+t=1: 3.2512321472168
+t=2: 8.37642574310303
+t=3: 15.5016193389893
+t=4: 24.6312084197998
+```
