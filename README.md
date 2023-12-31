@@ -48,3 +48,9 @@ t=2: 8.37642574310303
 t=3: 15.5016193389893
 t=4: 24.6312084197998
 ```
+## Notes
+--- 
+There are a few details that I haven't talked about although you probably shouldn't take my word for most of what was or will be said here. It's just my own experience and nothing showed me that it didn't work.  
+If we sum up all delta time during one second, we should get approximately 1. Some frames can take longer to render and some less time. Due to that fact, we can get less or more frames within one second.
+
+---
