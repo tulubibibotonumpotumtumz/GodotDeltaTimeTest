@@ -20,7 +20,7 @@ I decided to make the speed function _s(t) = 2_ which is implemented as such:
 #linear speed
 var lin_speed = 2
 func _process(delta):
-  position.x += lin_speed*delta
+	position.x += lin_speed*delta
 ```
 By doing the integral we can get _S(t) = 2t_ and when it is displayed, this is what it returns for the position:
 ```
@@ -38,7 +38,7 @@ var quad_speed = 2
 var acceleration = 2
 func _process(delta):
 	position.x += quad_speed*delta
-  quad_speed += acceleration*delta
+	quad_speed += acceleration*delta
 ```
 To find how much we actually moved we find the integral _S(t) = t<sup>2</sup> + 2t_ with the values:
 ```
