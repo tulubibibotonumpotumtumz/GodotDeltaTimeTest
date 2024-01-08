@@ -56,7 +56,19 @@ func _process(delta):
 	position.x = quad(quad_t)
 	quad_t += delta
 ```
-The returned values are similar so I guess they are both techniques to create movement. The only thing we can notice is that we have to set a value for the position instead of incrementing the values like the previous technique. If I had to guess it's probably because the definite integral _F_ represents a net change from the start of the interval. So, in order to get F's value at a specific point _t_, we have to sum up all the values up to _t_. With the new technique, we already have the _F_'s expression so we only need to plug the values in. The incrementing approach has its limits when, for example we want to model something that never derives to a constant (exponential function). This is why the other displacement functions that fit this criteria (or even polynomials but with too high of a degree) will use this new technique. This won't change much to our method, we can still find the speed first and then find the integral if we want to.
+The returned values are similar so I guess they are both techniques to create movement. The only thing we can notice is that we have to set a value for the position instead of incrementing the values like the previous technique. If I had to guess it's probably because the definite integral _F_ represents a net change from the start of the interval. So, in order to get F's value at a specific point _t_, we have to sum up all the values up to _t_. With the new technique, we already have the _F_'s expression so we only need to plug the values in. The incrementing approach has its limits when, for example we want to model something that never derives to a constant (exponential function). This is why the other displacement functions that fit this criteria (or even polynomials but with too high of a degree) will use this new technique. This won't change much to our method, we can still find the speed first and then find the integral if we want to.  
+  
+Another solution is simply to write the speed function and increment it to the position. This will be closer to what we were already doing with the only exception being that we still increment time with delta.
+```
+func quad_speed(t):
+	return 2*t + 2
+var quad_t = 2
+func _process(delta):
+	position.x += quad_speed(t):
+	quad_t += delta
+```
+  
+The only issue I ran into with all these techniques is that if they didn't start from frame 0, they didn't work return the same results as expected. I can't figure out yet why this working this is behaving so strangely.
 
 ## Notes
 --- 
